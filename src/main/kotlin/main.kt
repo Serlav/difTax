@@ -1,15 +1,12 @@
-fun main() {
-    calculateTax("VkPay", 0, 10_000_00)
-    calculateTax("visa", 0, 500_000_00)
-    calculateTax("masterCard", 300_000_00, 450_000_00)
-    calculateTax("masterCard", 0, 850_000_00)
-}
+//fun main() {
+  //  calculateTax("masterCard", 0, 500_000_00)
+//}
 
 fun calculateTax(
     typeOfCard: String = "vkPay",
     transferAmountPerMonth: Int = 0,
     payment: Int
-) {
+): Int {
     if (transferAmountPerMonth + payment < 600_000_00) {
         val tax = when (typeOfCard) {
             "masterCard" -> taxMasterCard(payment)
@@ -20,11 +17,16 @@ fun calculateTax(
         val paymentPlusTax = (payment + tax) / 100
         val totalPerMonth = transferAmountPerMonth / 100 + paymentPlusTax
 
+
         println("Перевод через $typeOfCard на сумму $paymentPlusTax руб.  выполнен")
         println("С учетом комиссии $tax коп.")
         println("В этом месяце переведено $totalPerMonth руб.")
         println()
+
+        return tax
+
     } else println("Превышен лимит перевода в месяц")
+    return -1
 }
 
 fun taxMasterCard(payment: Int): Int {
